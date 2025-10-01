@@ -6,19 +6,19 @@ IBM skillsbuild project
 A simple and stylish To-Do List web application that allows users to add, complete, and delete tasks. Data is stored in `localStorage`, so tasks remain even after refreshing the page.
 
 ## 🚀 Live Demo
-[View Deployment on Vercel](https://todo-list-app.vercel.app)
+[View Deployment on Vercel]([https://todo-list-app.vercel.app](https://to-do-list-mter0skph-rykinas-projects.vercel.app))
 
 ## 📝 Features
 - Add new tasks
 - Mark tasks as completed
 - Delete tasks
 - Data persistence with localStorage
-- Simple & modern UI with animations
+- Simple UI
 
 ## 🛠️ Technologies Used
-- HTML5
-- CSS3
-- JavaScript (Vanilla)
+- HTML
+- CSS
+- JavaScript 
 
 ## ⚡ Setup Instructions
 1. Clone this repository:
