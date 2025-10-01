@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To-Do List App</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #74ebd5 0%, #9face6 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      width: 380px;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 15px;
+    }
+    #taskInput {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      transition: 0.3s;
+      box-sizing: border-box;
+      display: block;
+    }
+    #taskInput:focus {
+      border-color: #74b9ff;
+      outline: none;
+      box-shadow: 0 0 6px rgba(116,185,255,0.6);
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background: linear-gradient(135deg, #74b9ff, #0984e3);
+      color: white;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      display: block;
+    }
+    button:hover {
+      transform: scale(1.03);
+      background: linear-gradient(135deg, #0984e3, #74b9ff);
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 15px;
+    }
+    li {
+      background: #f9f9f9;
+      margin: 8px 0;
+      padding: 12px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      animation: slideIn 0.4s ease;
+    }
+    li.completed {
+      text-decoration: line-through;
+      color: gray;
+      background: #ecf0f1;
+    }
+    .actions button {
+      margin-left: 5px;
+      padding: 6px 10px;
+      font-size: 14px;
+      border-radius: 6px;
+    }
+    .delete {
+      background: #e74c3c;
+    }
+    .delete:hover {
+      background: #c0392b;
+    }
+    .complete {
+      background: #2ecc71;
+    }
+    .complete:hover {
+      background: #27ae60;
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .productive {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      color: #555;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>✨ To-Do List ✨</h1>
+    <input type="text" id="taskInput" placeholder="Enter a new task..." />
+    <button onclick="addTask()">+ Add Task</button>
+    <ul id="taskList"></ul>
+    <div class="productive">Stay productive 💪</div>
+  </div>
+
+  <script>
+    const taskInput = document.getElementById("taskInput");
+    const taskList = document.getElementById("taskList");
+
+    // Load tasks from localStorage
+    window.onload = function() {
+      const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+      savedTasks.forEach(task => renderTask(task.text, task.completed));
+    };
+
+    function addTask() {
+      const taskText = taskInput.value.trim();
+      if (taskText === "") return alert("Please enter a task!");
+      renderTask(taskText, false);
+      saveTasks();
+      taskInput.value = "";
+    }
+
+    function renderTask(text, completed) {
+      const li = document.createElement("li");
+      if (completed) li.classList.add("completed");
+      li.innerHTML = `
+        <span>${text}</span>
+        <div class="actions">
+          <button class="complete" onclick="toggleComplete(this)">✓</button>
+          <button class="delete" onclick="deleteTask(this)">✗</button>
+        </div>
+      `;
+      taskList.appendChild(li);
+    }
+
+    function toggleComplete(btn) {
+      const li = btn.parentElement.parentElement;
+      li.classList.toggle("completed");
+      saveTasks();
+    }
+
+    function deleteTask(btn) {
+      const li = btn.parentElement.parentElement;
+      taskList.removeChild(li);
+      saveTasks();
+    }
+
+    function saveTasks() {
+      const tasks = [];
+      document.querySelectorAll("#taskList li").forEach(li => {
+        tasks.push({
+          text: li.querySelector("span").innerText,
+          completed: li.classList.contains("completed")
+        });
+      });
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+  </script>
+</body>
+</html>
