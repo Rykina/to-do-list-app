@@ -1,7 +1,7 @@
 # to-do-list-app
 IBM skillsbuild project
 
-# ✨ To-Do List App ✨
+# ✨ To-Do List App by Muhammad Nabil Indrawan✨
 
 A simple and stylish To-Do List web application that allows users to add, complete, and delete tasks. Data is stored in `localStorage`, so tasks remain even after refreshing the page.
 
